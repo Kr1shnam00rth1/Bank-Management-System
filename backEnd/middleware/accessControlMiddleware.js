@@ -24,4 +24,4 @@ function checkCashierAccess(req, res, next){
     next();
 }
 
-module.exports = {checkUserAcess, checkManagerAcess, checkCashierAcess};
+module.exports = {checkUserAccess, checkManagerAccess, checkCashierAccess};
