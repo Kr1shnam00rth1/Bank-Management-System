@@ -3,7 +3,7 @@ const { db } = require("../config/dbConfig");
 const { createToken } = require("../middleware/jwtMiddleware");
 
 // Function to handle cashier login
-// Route" POST /api/cashier/login
+// Route: POST /api/cashier/login
 async function cashierLogin(req, res) {
     try {
         const { email, password } = req.body;
@@ -65,7 +65,7 @@ async function cashierUserAccountInfo(req, res) {
 }
 
 // Function to handle cashier deposits
-// Route" POST /api/cashier/deposit
+// Route: POST /api/cashier/deposit
 async function cashierDeposit(req, res) {
     try {
         const { accountNumber, amount } = req.body;
