@@ -9,8 +9,9 @@ async function cashierLogin(req, res) {
         const { email, password } = req.body;
 
         if (!email || !password) {
-            return res.status(400).json({ message: "Input fields are missing" });
+            return res.status(400).json({ message: "Email and password are required" });
         }
+        
         const  [cashierDetails] = await db.query("SELECT * FROM cashiers WHERE email = ?", [email]);
 
         if (cashierDetails.length != 0 && (await bcrypt.compare(password, cashierDetails[0].password))){
@@ -38,9 +39,9 @@ async function cashierUserAccountInfo(req, res) {
         const { accountNumber } = req.body;
 
         if (!accountNumber) {
-            return res.status(400).json({ message: "Invalid input values" });
+            return res.status(400).json({ message: "Account number is required" });
         }
-
+        
         const [userDetails] = await db.query('SELECT * FROM users WHERE account_number = ?', [accountNumber]);
 
         if (userDetails.length == 0) {
@@ -68,11 +69,15 @@ async function cashierUserAccountInfo(req, res) {
 async function cashierDeposit(req, res) {
     try {
         const { accountNumber, amount } = req.body;
-
-        if (!accountNumber || !amount || amount <= 0) {
-            return res.status(400).json({ message: "Invalid input values" });
+        
+        if (!accountNumber) {
+            return res.status(400).json({ message: "Account number is required" });
         }
-
+        
+        if (!amount || amount <= 0) {
+            return res.status(400).json({ message: "Invalid deposit amount" });
+        }
+        
         const [userDetails] = await db.query('SELECT * FROM users WHERE account_number = ?', [accountNumber]);
 
         if (userDetails.length == 0) {
@@ -99,8 +104,12 @@ async function cashierWithdrawal(req, res) {
     try {
         const { accountNumber, amount } = req.body;
 
-        if (!accountNumber || !amount || amount <= 0) {
-            return res.status(400).json({ message: "Invalid input values" });
+        if (!accountNumber) {
+            return res.status(400).json({ message: "Account number is required" });
+        }
+        
+        if (!amount || amount <= 0) {
+            return res.status(400).json({ message: "Invalid withdrawal amount" });
         }
 
         const [userDetails] = await db.query('SELECT * FROM users WHERE account_number = ?', [accountNumber]);
