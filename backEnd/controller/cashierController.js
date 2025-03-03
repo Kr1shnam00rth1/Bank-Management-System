@@ -12,7 +12,7 @@ async function cashierLogin(req, res) {
             return res.status(400).json({ message: "Email and password are required" });
         }
         
-        const  [cashierDetails] = await db.query("SELECT * FROM cashiers WHERE email = ?", [email]);
+        const  [cashierDetails] = await db.query("SELECT password FROM cashiers WHERE email = ?", [email]);
 
         if (cashierDetails.length != 0 && (await bcrypt.compare(password, cashierDetails[0].password))){
             const payload = { cashier_id: cashierDetails[0].cashier_id, role: "cashier" };
@@ -42,7 +42,7 @@ async function cashierUserAccountInfo(req, res) {
             return res.status(400).json({ message: "Account number is required" });
         }
         
-        const [userDetails] = await db.query('SELECT * FROM users WHERE account_number = ?', [accountNumber]);
+        const [userDetails] = await db.query('SELECT account_number, full_name, balance, status FROM users WHERE account_number = ?', [accountNumber]);
 
         if (userDetails.length == 0) {
             return res.status(400).json({ message: "User account does not exist" });
@@ -78,7 +78,7 @@ async function cashierDeposit(req, res) {
             return res.status(400).json({ message: "Invalid deposit amount" });
         }
         
-        const [userDetails] = await db.query('SELECT * FROM users WHERE account_number = ?', [accountNumber]);
+        const [userDetails] = await db.query('SELECT status FROM users WHERE account_number = ?', [accountNumber]);
 
         if (userDetails.length == 0) {
             return res.status(400).json({ message: "User account does not exist" });
@@ -112,7 +112,7 @@ async function cashierWithdrawal(req, res) {
             return res.status(400).json({ message: "Invalid withdrawal amount" });
         }
 
-        const [userDetails] = await db.query('SELECT * FROM users WHERE account_number = ?', [accountNumber]);
+        const [userDetails] = await db.query('SELECT balance, status FROM users WHERE account_number = ?', [accountNumber]);
 
         if (userDetails.length == 0) {
             return res.status(400).json({ message: "User account does not exist" });
