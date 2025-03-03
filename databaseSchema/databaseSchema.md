@@ -43,9 +43,8 @@
 | `type`         | ENUM            | Not Null (Values: deposit, withdrawal, transfer) |
 
 ### Otps Table
-
-| Column      | Data Type      | Constraints                                    |
-|------------|--------------|-----------------------------------------------|
-| `user_id`  | CHAR(36)     | Not Null, Foreign Key (users.user_id), Cascade Delete |
-| `otp_code` | VARCHAR(255) | Not Null                                     |
-| `timestamp` | TIMESTAMP   | Default CURRENT_TIMESTAMP                     |
+| Column     | Data Type      | Constraints                          |  
+|------------|--------------|-------------------------------------|  
+| `email`    | VARCHAR(255) | Not Null, Primary Key               |  
+| `otp_code` | VARCHAR(255) | Not Null                            |  
+| `timestamp` | TIMESTAMP   | Default CURRENT_TIMESTAMP           | 
