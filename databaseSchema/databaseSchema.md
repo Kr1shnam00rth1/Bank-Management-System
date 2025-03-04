@@ -43,8 +43,11 @@
 | `type`         | ENUM            | Not Null (Values: deposit, withdrawal, transfer) |
 
 ### Otps Table
+
 | Column     | Data Type      | Constraints                          |  
 |------------|--------------|-------------------------------------|  
 | `email`    | VARCHAR(255) | Not Null, Primary Key               |  
 | `otp_code` | VARCHAR(255) | Not Null                            |  
-| `timestamp` | TIMESTAMP   | Default CURRENT_TIMESTAMP           | 
+| `expiry_time` | DATETIME   |  Not Null          | 
+
++ Made a MySQL event scheduler to delete expired OTPs
