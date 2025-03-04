@@ -51,7 +51,7 @@ async function createCashierAccount(req, res) {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        sendMail(email, "Your Cashier Account Password", `Hello,\n\nYour cashier account password is: ${password}\n`);
+        sendMail(email, "Your Cashier Account Credentials", `Hello,\n\nWe hope you're doing well.\n\nYour cashier account password is: ${password}\n\nBest regards,\n[Titan Bank]`);
 
         await db.query('INSERT INTO cashiers (email, password, full_name) VALUES (?, ?, ?)', [email, hashedPassword, fullName]);
         
